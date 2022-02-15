@@ -12,17 +12,17 @@
             <h2>Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <div class="form-floating my-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating my-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.Password"></label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating my-3">
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
@@ -34,29 +34,66 @@
         <section>
             <h3>Use another service to register.</h3>
             <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+           @{ 
+                if ((Model.ExternalLogins?.Count ?? 0) > 0)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
+                    foreach(var provider in Model.ExternalLogins)
+                    {
+                         if (provider.Name == "Google")
+                          {
+                              <div class="col-md-4">
+                                  <button type = "submit" class="btn btn-block btn-google" value="@provider.Name" 
+                                            title="Log in using your @provider.DisplayName account" name="provider">
+
+                                      <i class="fab fa-google-plus fa-align-left social-icon" style=""></i>Google
+                                  </button>
+                              </div>
+                          }
+                          else if (provider.Name == "Facebook")
+                          {
+                              <div class="col-md-4">
+                                  <button class="btn-block btn btn-facebook" type="submit" value="@provider.Name" 
+                                             title="Log in using your @provider.DisplayName account" name="provider">
+
+                                      <i class="fab fa-facebook fa-align-left social-icon"></i>Facebook
+                                  </button>
+                              </div>
+                          }
+                          else if (provider.Name == "Twitter")
+                          {
+                              <div class="col-md-4">
+                                  <button class="btn-block btn btn-twitter" type="submit" value="@provider.Name" 
+                                          title="Log in using your @provider.DisplayName account" name="provider">
+
+                                      <i class="fab fa-twitter fa-align-left social-icon"></i>Twitter
+                                  </button>
+                              </div>
+                          }
+                          else if (provider.Name == "Microsoft")
+                          {
+                              <div class="col-md-4">
+                                  <button class="btn-block btn btn-microsoft" type="submit" value="@provider.Name" 
+                                           title="Log in using your @provider.DisplayName account" name="provider">
+
+                                      <i class="fab fa-microsoft fa-align-left social-icon"></i>Microsoft
+                                  </button>
+                              </div>
+                          }
+                          else
+                          {
+                              <div class="col-md-4">
+                                  <button class="btn-block btn btn-linkedin" type="submit" name="provider" 
+                                   value="@provider.Name" title="Log in using your @provider.DisplayName account">
+
+                                      <i class="fab fa-life-buoy fa-align-left social-icon"></i>
+                                      Sign in with @provider.Name
+
+                                  </button>
+                              </div>
+                          }
+                    }
+
+             }
             }
         </section>
     </div>
